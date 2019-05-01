@@ -157,7 +157,7 @@ public class PurchaseController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		
+		System.out.println("µð¹ö±ë¿ë");
 		return "forward:/purchase/listPurchase.jsp";
 	}
 	
