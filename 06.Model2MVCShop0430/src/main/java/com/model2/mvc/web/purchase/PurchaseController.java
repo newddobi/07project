@@ -46,21 +46,37 @@ public class PurchaseController {
 	int pageSize;
 	
 	@RequestMapping("/addPurchaseView.do")
-	public String addPurchaseView() throws Exception{
+	public String addPurchaseView(@RequestParam("prodNo") int prodNo,
+																Model model) throws Exception{
 		
 		System.out.println("/addPurchaseView.do");
 		
-		return "redirect:/purchase/addPurchaseView.jsp";
+		Product product = productService.getProduct(prodNo);
+		
+		model.addAttribute("product", product);
+		
+		return "forward:/purchase/addPurchaseView.jsp";
 	}
 	
 	@RequestMapping("/addPurchase.do")
-	public String addPurchase(@ModelAttribute("purchase") Purchase purchase) throws Exception{
+	public String addPurchase(@ModelAttribute("purchase") Purchase purchase,
+														@RequestParam("prodNo") int prodNo,
+														@RequestParam("buyerId") String buyerId) throws Exception{
 		
 		System.out.println("/addPurchase.do");
 		
+		User user = new User();
+		Product product = new Product();
+		
+		user.setUserId(buyerId);
+		product.setProdNo(prodNo);
+		
+		purchase.setBuyer(user);
+		purchase.setPurchaseProd(product);
+		
 		purchaseService.addPurchase(purchase);
 		
-		return "redirect:/purchase/addPurchase.jsp";
+		return "forward:/purchase/addPurchase.jsp";
 	}
 	
 	@RequestMapping("/getPurchase.do")
@@ -148,11 +164,11 @@ public class PurchaseController {
 	@RequestMapping("/deletePurchase.do")
 	public String deletePurchase(@RequestParam("tranNo") int tranNo) throws Exception{
 		
-		System.out.println("/deletePurchase.do");
+		System.out.println("/deletePurchase.do");	
 		
 		purchaseService.deletePurchase(tranNo);
 		
-		return "forward:/listPurchase.do";
+		return "forward:/purchase/afterDelete.jsp";
 	}
 	
 	@RequestMapping("/updateTranCode.do")

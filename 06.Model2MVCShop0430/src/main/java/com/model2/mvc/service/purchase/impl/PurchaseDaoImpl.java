@@ -19,6 +19,7 @@ public class PurchaseDaoImpl implements PurchaseDao{
 	@Autowired
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
+	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -48,7 +49,7 @@ public class PurchaseDaoImpl implements PurchaseDao{
 		map.put("buyerId", buyerId);
 		map.put("endRowNum",  search.getEndRowNum()+"" );
 		map.put("startRowNum",  search.getStartRowNum()+"" );
-		System.out.println("½ÇÇè¿ë: "+buyerId);
+
 		return sqlSession.selectList("PurchaseMapper.getPurchaseList", map);
 	}
 

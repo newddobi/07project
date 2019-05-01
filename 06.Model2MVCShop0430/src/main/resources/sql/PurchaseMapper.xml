@@ -7,8 +7,9 @@
 <mapper namespace="PurchaseMapper">
 
 	<resultMap type="purchase" id="purchaseSelectMap">
-		<result property="buyer.userId"	column="buyer_id" />
-		<result property="purchaseProd.prodNo"	column="prod_no" />
+		<result property="buyer.userId"	column="buyer_id" jdbcType="VARCHAR"/>
+		<result property="purchaseProd.prodNo"	column="prod_no" jdbcType="NUMERIC"/>
+		<result property="purchaseProd.prodName"	column="prod_name" jdbcType="VARCHAR"/>
 		
 		<result property="tranNo"	column="tran_no" 		jdbcType="NUMERIC" />
 		<result property="paymentOption" 				column="payment_option" 					jdbcType="CHAR" />
@@ -23,10 +24,10 @@
 	
 
 	
-	<insert id="addPurchase" parameterType="product">
+	<insert id="addPurchase" parameterType="purchase">
 		INSERT
 		INTO transaction ( tran_no, prod_no, buyer_id, payment_option, receiver_name, receiver_phone, dlvy_addr, dlvy_request, tran_status_code, order_date, dlvy_date)
-		VALUES(seq_transaction_tran_no.NEXTVAL, #{purchaseProd.prodNo}, #{buyer.userId}, #{paymentOption}, #{receiverName}, #{receiverPhone}, #{divyAddr}, #{divyRequest}, #{tranCode}, SYSDATE, #{divyDate})
+		VALUES(seq_transaction_tran_no.NEXTVAL, #{purchaseProd.prodNo}, #{buyer.userId}, #{paymentOption}, #{receiverName}, #{receiverPhone}, #{divyAddr}, #{divyRequest}, 3, SYSDATE, #{divyDate})
 	</insert>
 	
 	<select id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
