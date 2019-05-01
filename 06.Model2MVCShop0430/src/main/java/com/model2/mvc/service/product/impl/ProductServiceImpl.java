@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	public ProductServiceImpl() {
+		System.out.println("test");
 		System.out.println(this.getClass());
 	}
 
