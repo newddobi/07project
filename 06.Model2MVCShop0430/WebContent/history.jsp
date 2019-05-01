@@ -20,9 +20,9 @@
 	if (cookies!=null && cookies.length > 0) {
 		for (int i = 0; i < cookies.length; i++) {
 			Cookie cookie = cookies[i];
-			if (cookie.getName().equals("history")) {
-				history = cookie.getValue();
-			}
+			history += cookie.getValue();
+			
+			System.out.println(history);
 		}
 		if (history != null) {
 			String[] h = history.split(",");

@@ -2,7 +2,9 @@ package com.model2.mvc.web.product;
 
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,11 +61,15 @@ public class ProductController {
 		}
 		
 		@RequestMapping("/getProduct.do")
-		public String getProduct( @RequestParam("prodNo") int prodNo , Model model ) throws Exception {
+		public String getProduct( @RequestParam("prodNo") int prodNo , Model model,
+														HttpServletResponse response) throws Exception {
 			
 			System.out.println("/getProduct.do");
 			productService.increaseViewCount(prodNo);
 			Product product = productService.getProduct(prodNo);
+			
+			Cookie cookie = new Cookie(String.valueOf(prodNo), String.valueOf(prodNo));
+			response.addCookie(cookie);
 			
 			model.addAttribute("product", product);
 			
